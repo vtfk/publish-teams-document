@@ -4,6 +4,8 @@
   "description": "Publish sharepoint documents to innsida and the public web",
   "main": "index.js",
   "scripts": {
+    "start dispatcher": "node ./dispatcher/index.js",
+    "start setup-libraries": "node ./setup-libraries/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
