@@ -1,0 +1,59 @@
+[
+  {
+    "@odata.etag": "\"809e7ac3-0305-499c-9345-2e5637356b18,3\"",
+    "createdDateTime": "2023-09-07T09:46:50Z",
+    "id": "6",
+    "webUrl": "https://vtfk.sharepoint.com/sites/BDK-Jrgensteste-team/Publiseringsdokumenter/Dokument111.docx",
+    "createdBy": {
+      "user": {
+        "email": "jorgen.thorsnes@vtfk.no",
+        "id": "ba04b470-be3a-4f97-9a0b-caa865417f5c",
+        "displayName": "Jørgen Thorsnes"
+      }
+    },
+    "lastModifiedBy": {
+      "user": {
+        "email": "jorgen.thorsnes@vtfk.no",
+        "id": "ba04b470-be3a-4f97-9a0b-caa865417f5c",
+        "displayName": "Jørgen Thorsnes"
+      }
+    },
+    "fields@odata.context": "https://graph.microsoft.com/v1.0/$metadata#sites('0a4121ce-7384-474c-afff-ee20f48bff5e')/lists('f2fe7099-a6d7-4a95-b16d-15df756dc608')/drive/list/items('6')/fields/$entity",
+    "fields": {
+      "@odata.etag": "\"809e7ac3-0305-499c-9345-2e5637356b18,3\"",
+      "FileLeafRef": "Dokument111.docx",
+      "Publisering": [
+        "Innsida",
+        "vtfk.no"
+      ],
+      "ptd_publisering": [
+        "Innsida"
+      ],
+      "ptd_publisert_versjon": "0",
+      "id": "6",
+      "ContentType": "Dokument",
+      "Created": "2023-09-07T09:46:50Z",
+      "AuthorLookupId": "10",
+      "Modified": "2023-09-07T12:29:52Z",
+      "EditorLookupId": "10",
+      "_CheckinComment": "",
+      "LinkFilenameNoMenu": "Dokument111.docx",
+      "LinkFilename": "Dokument111.docx",
+      "DocIcon": "docx",
+      "FileSizeDisplay": "21763",
+      "ItemChildCount": "0",
+      "FolderChildCount": "0",
+      "_ComplianceFlags": "",
+      "_ComplianceTag": "",
+      "_ComplianceTagWrittenTime": "",
+      "_ComplianceTagUserId": "",
+      "_CommentCount": "",
+      "_LikeCount": "",
+      "_DisplayName": "",
+      "Edit": "0",
+      "_UIVersionString": "4.0",
+      "ParentVersionStringLookupId": "6",
+      "ParentLeafNameLookupId": "6"
+    }
+  }
+]

@@ -1,0 +1,26 @@
+{
+  "name": "publish-teams-document",
+  "version": "1.0.0",
+  "description": "Publish sharepoint documents to innsida and the public web",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vtfk/publish-teams-document.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vtfk/publish-teams-document/issues"
+  },
+  "homepage": "https://github.com/vtfk/publish-teams-document#readme",
+  "dependencies": {
+    "@azure/msal-node": "^2.1.0",
+    "@vtfk/logger": "^4.3.2",
+    "axios": "^1.5.0",
+    "dotenv": "^16.3.1",
+    "node-cache": "^5.1.2"
+  }
+}
