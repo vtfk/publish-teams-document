@@ -108,6 +108,10 @@ dist
 *.pem
 *.key
 *.cert
+*.cer
 
 # Local documents
 documents/
+
+# ignore dir
+ignore/
