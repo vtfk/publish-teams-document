@@ -110,6 +110,9 @@ dist
 *.cert
 *.cer
 
+# Local publish sites file
+publish-sites.js
+
 # Local documents
 documents/
 
