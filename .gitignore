@@ -111,7 +111,8 @@ dist
 *.cer
 
 # Local publish sites file
-publish-sites.js
+publish-libraries.js
+reset-libraries.js
 
 # Local documents
 documents/
