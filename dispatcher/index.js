@@ -1,14 +1,36 @@
 (async () => {
-  const siteConfig = require('../publish-sites')
-  const { logger } = require('@vtfk/logger')
+  const libraryConfig = require('../publish-libraries')
+  const { logger, logConfig } = require('@vtfk/logger')
   const { pagedGraphRequest } = require('../lib/graph-request')
   const { columnDefinitions } = require('../config')
-  const { writeFileSync, mkdirSync, existsSync } = require('fs')
+  const { writeFileSync, mkdirSync, existsSync, appendFileSync } = require('fs')
+
+  // Set up local logger
+  const LOG_DIR = `./logs/dispatcher`
+  if (!existsSync('./logs')) mkdirSync('./logs')
+  if (!existsSync(LOG_DIR)) mkdirSync(LOG_DIR)
+  const today = new Date()
+  const month = today.getMonth() + 1 > 9 ? `${today.getMonth() + 1}` : `0${today.getMonth() + 1}`
+  const logName = `${today.getFullYear()} - ${month}`
+
+  const localLogger = (entry) => {
+    console.log(entry)
+    if (LOG_DIR) {
+      appendFileSync(`${LOG_DIR}/${logName}.log`, `${entry}\n`)
+    }
+  }
+  logConfig({
+    prefix: 'Dispatcher',
+    teams: {
+      onlyInProd: false
+    },
+    localLogger
+  })
 
   // Make sure directories are setup correct
   const syncDir = (dir) => {
     if (!existsSync(dir)) {
-      logger('info', ['dispatcher', `${dir} folder does not exist, creating...`])
+      logger('info', [`${dir} folder does not exist, creating...`])
       mkdirSync(dir)
     }
   }
@@ -17,18 +39,22 @@
   syncDir('./documents/finished')
   syncDir('./documents/error')
 
-  const publishSites = siteConfig.filter(site => site.enabled)
+  const publishLibraries = libraryConfig.filter(lib => lib.enabled)
 
-  if (publishSites.length === 0) logger('warn', ['no sites enabled'])
+  if (publishLibraries.length === 0) logger('warn', ['no libraries enabled'])
 
-  for (const site of publishSites) {
+  for (const lib of publishLibraries) {
+    const resourceBase = `sites/${lib.siteId}/lists/${lib.listId}/drive/list/items`
     const select = '$select=createdDateTime,id,webUrl,createdBy,lastModifiedBy,fields'
-    const resource = `sites/${site.siteId}/lists/${site.listID}/drive/list/items`
-    const query = `expand=fields&${select}&$top=10`
+    const query = `$expand=fields&${select}&$top=10`
 
-    logger('info', ['dispatcher', 'fetching files from sharepoint', `Sitename: ${site.siteName}`, `Listname: ${site.listName}`])
+    const resource = `${resourceBase}?${query}`
 
-    const data = await pagedGraphRequest(resource, { queryParams: query, onlyFirstPage: false })
+    logger('info', ['fetching files from sharepoint library', `Sitename: ${lib.siteName}`, `Listname: ${lib.listName}`])
+
+    const data = await pagedGraphRequest(resource, { onlyFirstPage: false })
+
+    writeFileSync('./ignore/allDocs.json', JSON.stringify(data, null, 2))
 
     const isDocumentReady = (document) => {
       // Vi vil ha dokumenter som har publisering til en av destinasjonene og der nåværende hovedversjon er større enn publisert versjon
@@ -48,7 +74,7 @@
     for (const document of documentsToHandle) {
       // Opprett en jobb per dokument og legg i køen
       try {
-        const file = `./documents/queue/${site.siteName}-${site.listName}-${document.fields.LinkFilename}-${document.fields.Modified.substring(0, document.fields.Modified.indexOf('T'))}.json`
+        const file = `./documents/queue/${lib.siteName}-${lib.listName}-${document.fields.LinkFilename}-${document.fields.Modified.substring(0, document.fields.Modified.indexOf('T'))}.json`
         if (!existsSync(file)) writeFileSync(file, JSON.stringify(document, null, 2))
       } catch (error) {
         logger('error', ['Could not write document to file!! Oh no', 'file', file])
