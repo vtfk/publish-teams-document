@@ -4,9 +4,10 @@
   "description": "Publish sharepoint documents to innsida and the public web",
   "main": "index.js",
   "scripts": {
-    "start dispatcher": "node ./dispatcher/index.js",
-    "start setup-libraries": "node ./setup-libraries/index.js",
-    "start reset-libraries": "node ./setup-libraries/reset-libraries.js",
+    "start queue-ready-documents": "node ./scripts/queue-ready-documents.js",
+    "start publish-ready-documents": "node ./scripts/publish-ready-documents.js",
+    "start setup-libraries": "node ./scripts/setup-libraries.js",
+    "start reset-libraries": "node ./scripts/reset-libraries.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -21,10 +22,11 @@
   "homepage": "https://github.com/vtfk/publish-teams-document#readme",
   "dependencies": {
     "@azure/msal-node": "^2.1.0",
-    "@vtfk/logger": "^4.3.2",
+    "@vtfk/logger": "^6.0.1",
     "@vtfk/sharepoint-rest-auth": "^1.0.1",
-    "axios": "^1.5.0",
+    "axios": "^1.6.2",
     "dotenv": "^16.3.1",
+    "file-system-cache": "^2.4.4",
     "node-cache": "^5.1.2"
   }
 }

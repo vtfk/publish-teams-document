@@ -111,11 +111,14 @@ dist
 *.cer
 
 # Local publish sites file
-publish-libraries.js
-reset-libraries.js
+config/source-libraries.js
+config/reset-libraries.js
 
 # Local documents
 documents/
 
 # ignore dir
 ignore/
+
+# Local file cache
+/.file-cache
