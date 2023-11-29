@@ -1,5 +1,7 @@
 require('dotenv').config()
 
+const retryList = (process.env.RETRY_INTERVALS_MINUTES && process.env.RETRY_INTERVALS_MINUTES.split(',').map(numStr => Number(numStr))) || [15, 60, 240, 3600]
+retryList.unshift(0)
 module.exports = {
   COLUMN_NAMES_PUBLISHED_WEB_URL_NAME: process.env.COLUMN_NAMES_PUBLISHED_WEB_URL_NAME || 'ptd_web_url',
   COLUMN_NAMES_PUBLISHED_SHAREPOINT_URL_NAME: process.env.COLUMN_NAMES_PUBLISHED_SHAREPOINT_URL_NAME || 'ptd_sharepoint_url',
@@ -8,39 +10,33 @@ module.exports = {
   INNSIDA_PUBLISH_CHOICE_NAME: process.env.INNSIDA_PUBLISH_CHOICE || 'Innsida',
   WEB_PUBLISH_CHOICE_NAME: process.env.INNSIDA_PUBLISH_CHOICE || 'vestfoldfylke.no',
 
+  retryIntervalMinutes: retryList,
   disableDeltaQuery: (process.env.DISABLE_DELTA_QUERY && process.env.DISABLE_DELTA_QUERY === 'true') || false,
-  
+  graphBaseUrl: process.env.GRAPH_URL || 'tullballfinnes.sharepoint.com',
   statistics: {
     //   url: process.env.STATISTICS_URL || 'url to statistics endpoint',
     //   subscriptionKey: process.env.STATISTICS_SUBSCRIPTION_KEY || 'key to statistics endpoint'
   },
   // Source (where to get files)
-  sourceGraphClient: {
-    clientId: process.env.SOURCE_GRAPH_CLIENT_ID ?? 'superId',
-    clientSecret: process.env.SOURCE_GRAPH_CLIENT_SECRET ?? 'hemmelig hemmelig',
-    tenantId: process.env.SOURCE_GRAPH_TENANT_ID ?? 'tenant id',
-    scope: process.env.GRAPH_SCOPE ?? 'etSkikkeligSkuup',
-    baseurl: process.env.GRAPH_URL || 'tullballfinnes.sharepoint.com'
+  sourceAuth: {
+    clientId: process.env.SOURCE_AUTH_CLIENT_ID ?? 'superId',
+    tenantId: process.env.SOURCE_AUTH_TENANT_ID ?? 'tenant id',
+    tenantName: process.env.SOURCE_AUTH_TENANT_NAME ?? 'tenant name',
+    pfxPath: process.env.SOURCE_AUTH_PFX_PATH ?? '',
+    pfxPassphrase: process.env.SOURCE_AUTH_PFX_PASSPHRASE ?? null,
+    pfxThumbprint: process.env.SOURCE_AUTH_PFX_THUMBPRINT ?? ''
   },
-  // Source (where to get files)
-  sourceSharepointClient: {
-    clientId: process.env.SOURCE_GRAPH_CLIENT_ID ?? 'superId',
-    tenantId: process.env.SOURCE_GRAPH_TENANT_ID ?? 'tenant id',
-    tenantName: process.env.SOURCE_SP_TENANT_NAME ?? 'tenant name',
-    pfxPath: process.env.SOURCE_SP_PFX_PATH ?? '',
-    pfxBase64: process.env.SOURCE_SP_PFX_BASE64 ?? '',
-    pfxPassphrase: process.env.SOURCE_SP_PFX_PASSPHRASE ?? null,
-    pfxThumbprint: process.env.SOURCE_SP_PFX_THUMBPRINT ?? ''
-  },
-  // Destination (where to upload files)
-  destinationGraphClient: {
-    clientId: process.env.DESTINATION_GRAPH_CLIENT_ID ?? 'superId',
-    clientSecret: process.env.DESTINATION_GRAPH_CLIENT_SECRET ?? 'hemmelig hemmelig',
-    tenantId: process.env.DESTINATION_GRAPH_TENANT_ID ?? 'tenant id',
-    scope: process.env.GRAPH_SCOPE ?? 'etSkikkeligSkuup',
-    baseurl: process.env.GRAPH_URL || 'tullballfinnes.sharepoint.com'
+  // Destination
+  destinationAuth: {
+    clientId: process.env.DESTINATION_AUTH_CLIENT_ID ?? 'superId',
+    tenantId: process.env.DESTINATION_AUTH_TENANT_ID ?? 'tenant id',
+    tenantName: process.env.DESTINATION_AUTH_TENANT_NAME ?? 'tenant name',
+    pfxPath: process.env.DESTINATION_AUTH_PFX_PATH ?? '',
+    pfxPassphrase: process.env.DESTINATION_AUTH_PFX_PASSPHRASE ?? null,
+    pfxThumbprint: process.env.DESTINATION_AUTH_PFX_THUMBPRINT ?? ''
   },
   destinationLibrary: {
+    libraryUrl: process.env.DESTINATION_LIBRARY_URL || 'site hvor skal dokumenter havne på sharepoint',
     siteId: process.env.DESTINATION_SITE_ID || 'site hvor skal dokumenter havne på sharepoint',
     listId: process.env.DESTINATION_LIST_ID || 'dokumentbibliotek der dokumenter skal havne på sharepoint'
   },

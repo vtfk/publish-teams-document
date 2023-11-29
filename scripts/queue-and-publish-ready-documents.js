@@ -26,25 +26,25 @@
   syncDir('./documents/queue')
   syncDir('./documents/finished')
   syncDir('./documents/error')
+  syncDir('./documents/file-cache')
 
   // Queue ready documents
   /* TESTING BELOW, DONT GIDD TO RUN QUEUE */
-  
+
   try {
     await queueReadyDocuments()
   } catch (error) {
     logger('error', ['Failed when queueing ready documents', 'error', error.response?.data || error.stack || error.toString()])
     // Ingen fare å kjøre på videre å ta de dokumentet som evt ligger der, så vi bare fortsetter.
   }
-  
+
   // For hvert dokument i køen - sjekk om det skal kjøres - kjør handledocument
-  
   const queue = readdirSync('./documents/queue')
   for (const document of queue) {
     logConfig({
-      prefix: `queueAndPublishReadyDocuments - ${document}`,
+      prefix: `queueAndPublishReadyDocuments - ${document}`
     })
-    logger('info', [`Getting flowStatus, checking if ready for run`])
+    logger('info', ['Getting flowStatus, checking if ready for run'])
     let documentData
     try {
       documentData = require(`../documents/queue/${document}`)
@@ -59,7 +59,7 @@
       continue
     }
     logConfig({
-      prefix: `queueAndPublishReadyDocuments - ${document} - ${documentData.webUrl}`,
+      prefix: `queueAndPublishReadyDocuments - ${document} - ${documentData.webUrl}`
     })
     logger('info', ['Document is ready for run - lets gooo!'])
     try {

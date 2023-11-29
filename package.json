@@ -4,29 +4,29 @@
   "description": "Publish sharepoint documents to innsida and the public web",
   "main": "index.js",
   "scripts": {
-    "start queue-ready-documents": "node ./scripts/queue-ready-documents.js",
-    "start publish-ready-documents": "node ./scripts/publish-ready-documents.js",
-    "start setup-libraries": "node ./scripts/setup-libraries.js",
-    "start reset-libraries": "node ./scripts/reset-libraries.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "queue-and-publish-ready-documents": "node ./scripts/queue-and-publish-ready-documents.js",
+    "setup-libraries": "node ./scripts/setup-libraries.js",
+    "reset-libraries": "node ./scripts/reset-libraries.js",
+    "test": "standard"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vtfk/publish-teams-document.git"
   },
-  "author": "",
+  "author": "jorgtho",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/vtfk/publish-teams-document/issues"
   },
   "homepage": "https://github.com/vtfk/publish-teams-document#readme",
   "dependencies": {
-    "@azure/msal-node": "^2.1.0",
+    "@vestfoldfylke/msal-token": "^1.0.0",
     "@vtfk/logger": "^6.0.1",
-    "@vtfk/sharepoint-rest-auth": "^1.0.1",
     "axios": "^1.6.2",
     "dotenv": "^16.3.1",
-    "file-system-cache": "^2.4.4",
-    "node-cache": "^5.1.2"
+    "file-system-cache": "^2.4.4"
+  },
+  "devDependencies": {
+    "standard": "^17.1.0"
   }
 }
