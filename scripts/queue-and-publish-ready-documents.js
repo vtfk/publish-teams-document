@@ -1,10 +1,10 @@
 (async () => {
-  const sourceLibrariesConfig = require('../config/source-libraries')
   const { logger, logConfig } = require('@vtfk/logger')
   const { createLocalLogger } = require('../lib/local-logger')
   const { mkdirSync, existsSync, readdirSync } = require('fs')
   const { queueReadyDocuments } = require('../lib/flows/queue-ready-documents')
   const handleDocument = require('../lib/flows/handle-document')
+  const { deleteFinishedDocuments } = require('../lib/flows/delete-finished-documents')
 
   // Set up logging
   logConfig({
@@ -29,10 +29,9 @@
   syncDir('./documents/file-cache')
 
   // Queue ready documents
-  /* TESTING BELOW, DONT GIDD TO RUN QUEUE */
-
   try {
-    await queueReadyDocuments()
+    const queueMessage = await queueReadyDocuments()
+    logger('info', queueMessage)
   } catch (error) {
     logger('error', ['Failed when queueing ready documents', 'error', error.response?.data || error.stack || error.toString()])
     // Ingen fare å kjøre på videre å ta de dokumentet som evt ligger der, så vi bare fortsetter.
@@ -69,4 +68,6 @@
       continue
     }
   }
+  // Cleanup finished documnents
+  deleteFinishedDocuments()
 })()

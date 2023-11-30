@@ -63,18 +63,18 @@
     await sourceClient.upsertColumns(lib, columnDefinitions)
 
     logger('info', [`Checking views, adding publish view if it is missing, and modifying if it is missing columns, also, deleting publish columns from default view if they are there. Library: ${lib.libraryUrl}`])
+    const publishView = setupSourcePublishView(lib)
     try {
       logger('info', [`Removing fields from default view (if present). Library: ${lib.libraryUrl}`])
       const fieldsToRemove = columnDefinitions.map(colDef => colDef.body.name)
-      const cleanupViewResult = await sourceClient.cleanUpDefaultView(lib.libraryUrl, lib.listId, fieldsToRemove)
+      const cleanupViewResult = await sourceClient.cleanUpDefaultView(lib.libraryUrl, lib.listId, fieldsToRemove, publishView.title)
       logger('info', [`Successfully removed views from default view. ${cleanupViewResult} Library: ${lib.libraryUrl}`])
     } catch (error) {
       logger('error', [`Error when removing fields from default view. Library: ${lib.libraryUrl}`, 'error', error.response?.data || error.stack || error.toString()])
     }
     try {
       logger('info', [`Checking if need to add, and adding view and viewfield (upserting) to publishView if needed. Library: ${lib.libraryUrl}`])
-      const publishView = setupSourcePublishView(lib)
-      const upsertViewResult = await sourceClient.upsertView(lib.libraryUrl, lib.listId, publishView)
+      const upsertViewResult = await sourceClient.upsertView(lib.libraryUrl, lib.listId, publishView, publishView.removeColumnsIfExists)
       logger('info', [`Successfully upserted view and viewfield to publishView. ${upsertViewResult} Library: ${lib.libraryUrl}`])
     } catch (error) {
       logger('error', [`Error when upserting fields in publish view. Library: ${lib.libraryUrl}`, 'error', error.response?.data || error.stack || error.toString()])
