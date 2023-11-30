@@ -8,7 +8,7 @@ Går gjennom alle filer i biblioteket - setter standardverdier
   const { logger, logConfig } = require('@vtfk/logger')
   const { createLocalLogger } = require('../lib/local-logger')
   const { graphRequest } = require('../lib/graph-request')
-  const { getListAndSiteId } = require('../lib/graph-actions')
+  // const { getListAndSiteId } = require('../lib/graph-actions')
   const { columnDefinitions } = require('../config')
 
   // Set up logging
@@ -24,7 +24,7 @@ Går gjennom alle filer i biblioteket - setter standardverdier
 
   for (const lib of resetLibraries) {
     logger('info', ['Getting site and list id for easier and more consistent queries']) // Getting lists based on titles is actually display name, so can be anything...
-    const { listId } = await getListAndSiteId(lib.libraryUrl)
+    // const { listId } = await getListAndSiteId(lib.libraryUrl)
     // Sjekk om kolonne er der
 
     const resource = 'sites/columns'
@@ -45,12 +45,13 @@ Går gjennom alle filer i biblioteket - setter standardverdier
 
     for (const column of columnsToDelete) {
       try {
-        const columnResource = `${webUrlToRelativePath(lib.libraryUrl)}/columns/${column.id}`
+        // const columnResource = `${webUrlToRelativePath(lib.libraryUrl)}/columns/${column.id}`
         const requestOptions = {
           method: 'delete'
         }
+        console.log(requestOptions)
         logger('info', `Deleting column ${column.displayName}`)
-        const res = await graphRequest(columnResource, requestOptions)
+        // const res = await graphRequest(columnResource, requestOptions)
       } catch (error) {
         logger('error', [`Error when deleting column ${columnsToDelete.name}`, 'error', error.response.data || error.stack || error.toString()])
       }
