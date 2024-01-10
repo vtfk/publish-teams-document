@@ -19,6 +19,7 @@ Hvis noen plutselig skrur på versonering vil ikke integrasjonen ta hensyn til d
 ## Handle-document
 For hvert dokument / fil som ligger i køen, om det er klart for å kjøres (ikke venter på retry)
 
+haha
 ### Get-drive-item-data
 - Hent driveItem for det gjeldende dokumentet (vi får ikke expandet driveItem når vi bruker deltaSpørring, så vi henter den her)
 - Hent versjoner for det gjeldende dokumentet - finn lastModifier på hovedversjonen vi skal publisere. Dette er personen vi skal varsle om at dokumentet er publisert. (lastModifier på f. eks 5.2 er ikke nødvendigvis lastModifier på versjon 5.0)
