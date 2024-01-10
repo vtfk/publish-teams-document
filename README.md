@@ -47,7 +47,6 @@ For hvert dokument / fil som ligger i køen, om det er klart for å kjøres (ikk
 ### Statistics
 - Opprett element i statistikk-databasen
 
-
 ## Lag deg en .env
 App registration må ha sites.FullControl / readwrite og sharepoint readwrite all sites application permissions
 Graph client må ha sites.FullControl eller readwrite eller no sånt heftig
