@@ -45,13 +45,19 @@
       logger('info', [`Found list and site id in cache, using cache for ${lib.libraryUrl}`])
       lib.siteId = listAndSiteIdCache.siteId
       lib.listId = listAndSiteIdCache.listId
+      lib.siteName = listAndSiteIdCache.siteName
+      lib.tenantName = listAndSiteIdCache.tenantName
+      lib.libraryName = listAndSiteIdCache.listName
     } else {
       try {
-        const { siteId, listId } = await sourceClient.getListAndSiteId(lib.libraryUrl)
+        const { siteId, listId, siteName, listName, tenantName } = await sourceClient.getListAndSiteId(lib.libraryUrl)
         if (!siteId || !listId) throw new Error('Aiaia, mangler siteId eller listId, sjekk ut!')
-        fileCache.setSync(cacheListAndSiteKey, { siteId, listId })
+        fileCache.setSync(cacheListAndSiteKey, { siteId, listId, siteName, listName, tenantName })
         lib.siteId = siteId
         lib.listId = listId
+        lib.siteName = siteName
+        lib.tenantName = tenantName
+        lib.libraryName = listName
       } catch (error) {
         logger('error', ['Ææææh, failed when getting list and site id for library, run setup again or wait for next run', lib.libraryUrl, error.response?.data || error.stack || error.toString()])
         continue
