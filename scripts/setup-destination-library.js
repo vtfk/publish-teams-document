@@ -1,4 +1,3 @@
-
 (async () => {
   const { logger, logConfig } = require('@vtfk/logger')
   const { createLocalLogger } = require('../lib/local-logger')

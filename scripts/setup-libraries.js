@@ -1,4 +1,3 @@
-
 (async () => {
   const sourceLibrariesConfig = require('../config/source-libraries')
   const { logger, logConfig } = require('@vtfk/logger')
