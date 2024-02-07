@@ -10,7 +10,7 @@ module.exports = {
   COLUMN_NAMES_DOCUMENT_RESPONSIBLE_NAME: process.env.COLUMN_NAMES_DOCUMENT_RESPONSIBLE_NAME || 'ptd_doc_responsible',
   COLUMN_NAMES_PUBLISHED_BY_NAME: process.env.COLUMN_NAMES_PUBLISHED_BY_NAME || 'ptd_published_by',
   INNSIDA_PUBLISH_CHOICE_NAME: process.env.INNSIDA_PUBLISH_CHOICE || 'Innsida',
-  WEB_PUBLISH_CHOICE_NAME: process.env.INNSIDA_PUBLISH_CHOICE || 'vestfoldfylke.no',
+  WEB_PUBLISH_CHOICE_NAME: process.env.WEB_PUBLISH_CHOICE_NAME || 'vestfoldfylke.no',
 
   webPublishBaseUrl: process.env.WEB_PUBLISH_BASE_URL || 'https://www2.suppe.no/docs',
   webPublishDestinationPath: process.env.WEB_PUBLISH_DESTINATION_PATH || './webPublishing',

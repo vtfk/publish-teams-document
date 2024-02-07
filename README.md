@@ -6,6 +6,9 @@ bedre doks
 slettejobb i destinasjons-biblioteket
 fikse buggs nå
 
+## ISSUES
+Set-up-source-libraries tryner stort sett på første kjøring, må kjøres flere ganger... Fiks det når du har masse tid.
+
 ## Remarks
 Hvis noen plutselig skrur på versonering vil ikke integrasjonen ta hensyn til dette før etter 24 timer (grunnet caching av spørring om det er på versjonering på et bibliotek) - så gi gjeeerne beskjed før man gjør det...
 
