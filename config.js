@@ -44,7 +44,9 @@ module.exports = {
   convertToPdfExtensions: (process.env.CONVERT_TO_PDF_EXTENSIONS && process.env.CONVERT_TO_PDF_EXTENSIONS.split(',')) || ['csv', 'doc', 'docx', 'odp', 'ods', 'odt', 'pot', 'potm', 'potx', 'pps', 'ppsx', 'ppsxm', 'ppt', 'pptm', 'pptx', 'rtf', 'xls', 'xlsx'], // Se supported formats here: https://learn.microsoft.com/en-us/graph/api/driveitem-get-content-format?view=graph-rest-1.0&tabs=http#format-options
   mailConfig: {
     url: process.env.MAIL_URL || 'postmann-pat.vtfk.no',
-    key: process.env.MAIL_KEY || 'secretkey'
+    key: process.env.MAIL_KEY || 'secretkey',
+    sender: process.env.MAIL_SENDER || 'noreply@vestfoldfylke.no',
+    template: process.env.MAIL_TEMPLATE || 'vestfoldfylke.no' 
   },
   statisticsConfig: {
     url: process.env.STATISTICS_URL || 'statistikkmann-pat.vtfk.no',
