@@ -100,5 +100,7 @@ STATISTICS_KEY="nøkkel til stats api"
 DELETE_FINISHED_AFTER_DAYS="30 hvor lenge skal dokumenter ligge mellomlagret på server før de slettes"
 ```
 
+SE OGSÅ VALGFRIE ENV VARIABLER I CONFIG-FILA
+
 ## MERK
 Når du sletter kolonner blir ikke data på elementer for den kolonnen slettet - bare skjult. Det betyr at hvis man skal ha en EKTE reset av et bibliotek, må man iterere over items og fjerne data for kolonnene man skal fjerne, før man fjerner kolonnen.
