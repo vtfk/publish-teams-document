@@ -2,15 +2,31 @@
 Publish sharepoint documents to innsida and the public web
 
 # TODO
-bedre doks
 slettejobb i destinasjons-biblioteket
-fikse buggs nå
 
 ## ISSUES
-Set-up-source-libraries tryner stort sett på første kjøring, må kjøres flere ganger... Fiks det når du har masse tid.
+- Set-up-source-libraries tryner stort sett på første kjøring, må kjøres flere ganger... Fiks det når du har masse tid.
+- Håndtering av biblioteker som har egendefinerte kolonner før oppsett av løsningen - ser ut til at disse blir med i Dokumentpubliserings-visningen
 
 ## Remarks
-Hvis noen plutselig skrur på versonering vil ikke integrasjonen ta hensyn til dette før etter 24 timer (grunnet caching av spørring om det er på versjonering på et bibliotek) - så gi gjeeerne beskjed før man gjør det...
+- Hvis noen plutselig skrur på versonering vil ikke integrasjonen ta hensyn til dette før etter 24 timer (grunnet caching av spørring om det er på versjonering på et bibliotek) - så gi gjeeerne beskjed før man gjør det...
+- Når du sletter kolonner blir ikke data på elementer for den kolonnen slettet - bare skjult. Det betyr at hvis man skal ha en EKTE reset av et bibliotek, må man iterere over items og fjerne data for kolonnene man skal fjerne, før man fjerner kolonnen.
+
+## Førstegangs-oppsett
+- Sett opp env med sertifikater og stæsj [se .env eksempel lenger ned](#lag-deg-en-env)
+- Kjør oppsett av destinasjonsbiblioteket `node ./scripts/setup-destination-library.js` - om noe feiler, bare kjør det på nytt, da fikser den kun det som evt feila - kan også kjøres senere om det er gjort endringer i kolonner eller lignende
+- Sett opp publiseringsbibliotketer i ./config/source-libraries.js (ta en kopi av source-libraries-example.js og rename - så bør du skjønne oppsettet)
+- Kjør oppsett av kildebiblioteker som trenger oppsett (om de har skipSetup=false) - `node ./scripts/setup-libraries.js` om noe feiler, bare kjør det på nytt, da fikser den kun det som evt feila - kan også kjøres senere om det er gjort endringer i kolonner eller lignende
+- For å kjøre selve publiseringsjobben `node ./scripts/queue-and-publish-ready-documents.js` - sett gjerne jobben til å gå hvert 5. minutt i task-scheduler eller lignende for å blidgjøre brukerne
+
+## Sette opp biblioteker
+- Hvis du skal være forsiktig - disable scheduled task først (går nok bra å la den gå og)
+- Sett opp nytt publiseringsbibliotket i ./config/source-libraries.js
+- Kjør oppsett av kildebiblioteker som trenger oppsett (om de har skipSetup=false) - `node ./scripts/setup-libraries.js` om noe feiler, bare kjør det på nytt, da fikser den kun det som evt feila - kan også kjøres senere om det er gjort endringer i kolonner eller lignende
+- Sett på scheduled task igjen, så er det good
+
+## Logs
+Finner du i ./logs mappen her - sortert på mnd/år per script
 
 ## Flyt
 ## Queue-ready-documents
@@ -56,13 +72,33 @@ For hvert dokument / fil som ligger i køen, om det er klart for å kjøres (ikk
 App registration må ha sites.FullControl / readwrite og sharepoint readwrite all sites application permissions
 Graph client må ha sites.FullControl eller readwrite eller no sånt heftig
 
-GRAPH_CLIENT_ID="client iden din"
-GRAPH_CLIENT_SECRET="client secreten din"
-GRAPH_TENANT_ID="guid til tenanten din"
-GRAPH_SCOPE="https://graph.microsoft.com/.default forsempel"
-GRAPH_URL="https://graph.microsoft.com for eksempel"
-
-
+```bash
+SOURCE_AUTH_TENANT_ID="tenant id for der dokumentene skal publiseres fra"
+SOURCE_AUTH_TENANT_NAME="tenant navn for der dokumentene skal publiseres fra"
+SOURCE_AUTH_CLIENT_ID="client id for der dokumentene skal publiseres fra"
+SOURCE_AUTH_PFX_PATH="path til sertifikatet som brukes for autentisering for source_client"
+SOURCE_AUTH_PFX_THUMBPRINT="thumbprint på sertifikatet som brukes for autentisering for source_client"
+DESTINATION_AUTH_TENANT_ID="tenant id for der dokumentene skal publiseres til - vanligvis samme som source"
+DESTINATION_AUTH_TENANT_NAME="tenant navn for der dokumentene skal publiseres til - vanligvis samme som source"
+DESTINATION_AUTH_CLIENT_ID="client id for der dokumentene skal publiseres til - vanligvis samme som source"
+DESTINATION_AUTH_PFX_PATH="path til sertifikatet som brukes for autentisering for destination_client - vanligvis samme som source"
+DESTINATION_AUTH_PFX_THUMBPRINT="thumbprint på sertifikatet som brukes for autentisering for destination_client - vanligvis samme som source"
+DESTINATION_LIBRARY_URL="https://{tenant}.sharepoint.com/sites/{sitename}/{libraryName} - bibliotek der publiserte dokumenter skal havne"
+DESTINATION_SITE_ID="site id for biblioteket publiserte dokumenter ligger i"
+DESTINATION_LIST_ID="list id for bibloteket publisere dokumenter ligger i"
+GRAPH_URL="https://graph.microsoft.com"
+WEB_PUBLISH_DESTINATION_PATH="//nettverks-delt-mappe (eller mappe på server) der dokumenter som skal publiseres på nettsider havner"
+DISABLE_DELTA_QUERY="true / false - om man vil hente alle dokumenter i et kildebibliotek, eller bare de med endringer siden sist" 
+RETRY_INTERVALS_MINUTES="5, 30, 60 - når skal et feilet dokument prøve på nytt"
+WEB_PUBLISH_BASE_URL="https://www2.suppe.no/docs base-ur for publiserte dokumenter på nettside"
+MAIL_URL="url til mail api"
+MAIL_KEY="nøkkel til mail api"
+MAIL_TEMPLATE="hvilken mail template bruker du da?"
+MAIL_SENDER="avsender av eposten - typisk noreply"
+STATISTICS_URL="url til stats api"
+STATISTICS_KEY="nøkkel til stats api"
+DELETE_FINISHED_AFTER_DAYS="30 hvor lenge skal dokumenter ligge mellomlagret på server før de slettes"
+```
 
 ## MERK
 Når du sletter kolonner blir ikke data på elementer for den kolonnen slettet - bare skjult. Det betyr at hvis man skal ha en EKTE reset av et bibliotek, må man iterere over items og fjerne data for kolonnene man skal fjerne, før man fjerner kolonnen.
