@@ -46,7 +46,7 @@ module.exports = {
     url: process.env.MAIL_URL || 'postmann-pat.vtfk.no',
     key: process.env.MAIL_KEY || 'secretkey',
     sender: process.env.MAIL_SENDER || 'noreply@vestfoldfylke.no',
-    template: process.env.MAIL_TEMPLATE || 'vestfoldfylke.no' 
+    template: process.env.MAIL_TEMPLATE || 'vestfoldfylke'
   },
   statisticsConfig: {
     url: process.env.STATISTICS_URL || 'statistikkmann-pat.vtfk.no',
