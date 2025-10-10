@@ -22,7 +22,7 @@
   "dependencies": {
     "@vestfoldfylke/msal-token": "^1.0.0",
     "@vtfk/logger": "^6.2.2",
-    "axios": "^1.6.2",
+    "axios": "^1.12.2",
     "dotenv": "^16.3.1",
     "file-system-cache": "^2.4.4"
   },
